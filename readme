@@ -1,0 +1,45 @@
+# Custom Load Balancer - Distributed Systems Assignment
+
+## Overview
+This project implements a customizable load balancer using consistent hashing. It manages server replicas using Docker containers, handles fault recovery, and exposes APIs to add, remove, and query servers.
+
+## Technologies Used
+- Python 3.9
+- Flask (for server and load balancer)
+- Docker & Docker Compose
+- Consistent Hashing with Virtual Servers
+
+## Tasks Completed
+
+### ✅ Task 1: Server Implementation
+- `/home`: Returns server ID in JSON
+- `/heartbeat`: Returns empty response (200 OK)
+- Dockerfile created to containerize the server
+
+### ✅ Task 2: Consistent Hashing
+- Implemented consistent hash ring with 512 slots and 9 virtual servers per physical server
+- Used hash functions:
+  - H(i) = i + 2i + 17
+  - Φ(i,j) = i + j + 2j + 25
+- Added linear probing to resolve slot conflicts
+
+### ✅ Task 3: Load Balancer
+- Manages N replicas, initially 3
+- Routes requests using consistent hashing
+- Endpoints implemented:
+  - `/rep`: Returns replicas
+  - `/add`: Adds new replicas (with or without hostnames)
+  - `/rm`: Removes replicas (specific or random)
+  - `/<path>`: Forwards request using consistent hashing
+- Supports dynamic scaling and fault recovery
+
+### ✅ Task 4: Performance Analysis
+- A-1: Launched 10,000 async requests, logged server usage, plotted bar chart
+- A-2: Vary N from 2 to 6 and observed average load
+- A-3: Verified load balancer reroutes after server removal
+- A-4: Modified hash functions and observed behavior changes
+
+## How to Run
+```bash
+make build
+make up

@@ -15,6 +15,14 @@ def hash_request(req_id):
 
 def hash_virtual(i, j):
     return (i + j + 2 * j + 25) % M
+def safe_insert(hash_ring, key, value):
+    original_key = key
+    while key in hash_ring:
+        key = (key + 1) % M  # linear probing
+        if key == original_key:
+            raise Exception("Hash ring full!")
+   # print(f"Inserted {value} at slot {key}")
+    hash_ring[key] = value
 
 def update_ring():
     global hash_ring, sorted_keys
@@ -22,8 +30,9 @@ def update_ring():
     for sid, hostname in servers.items():
         for j in range(K):
             key = hash_virtual(sid, j)
-            hash_ring[key] = hostname
+            safe_insert(hash_ring, key, hostname)
     sorted_keys = sorted(hash_ring)
+    
 
 def get_target_server(req_id):
     h = hash_request(req_id)
