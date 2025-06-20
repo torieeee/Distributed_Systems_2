@@ -49,3 +49,6 @@ This project implements a customizable load balancer using **consistent hashing*
 ```bash
 make build     # Build Docker images
 make up        # Start load balancer and server containers
+![building the server](tests/Screenshot%20from%202025-06-19%2015-21-21.png)
+![building the server](tests/Screenshot%20from%202025-06-19%2015-21-35.png)
+![starting up](tests/Screenshot%20from%202025-06-19%2015-24-59.png)
