@@ -1,0 +1,4 @@
+flask==2.2.5
+werkzeug==2.3.8
+docker==5.0.3
+requests==2.26.0

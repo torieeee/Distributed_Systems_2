@@ -10,11 +10,13 @@ hash_ring = {}
 sorted_keys = []
 
 # Utilities
+
 def hash_request(req_id):
-    return (req_id + 2 * req_id + 17) % M
+    return int(hashlib.sha256(str(req_id).encode()).hexdigest(), 16) % M
 
 def hash_virtual(i, j):
-    return (i + j + 2 * j + 25) % M
+    return int(hashlib.sha256(f"{i}-{j}".encode()).hexdigest(), 16) % M
+
 def safe_insert(hash_ring, key, value):
     original_key = key
     while key in hash_ring:
@@ -32,10 +34,13 @@ def update_ring():
             key = hash_virtual(sid, j)
             safe_insert(hash_ring, key, hostname)
     sorted_keys = sorted(hash_ring)
+    print("[Hash Ring] Keys:", sorted_keys)
+    print("[Hash Ring] Map:", hash_ring)
     
 
 def get_target_server(req_id):
     h = hash_request(req_id)
+    print(f"[Hash] Req ID: {req_id}, Hash: {h}")
     for key in sorted_keys:
         if h <= key:
             return hash_ring[key]
@@ -105,12 +110,15 @@ def route_request(endpoint):
     req_id = random.randint(100000, 999999)
     server = get_target_server(req_id)
     url = f"http://{server}:5000/{endpoint}"
+    print(f"[Routing] Request ID {req_id} → {server}")
     try:
         import requests
         res = requests.get(url)
         return res.content, res.status_code
     except Exception:
         return jsonify({"message": f"<Error> '/{endpoint}' endpoint does not exist in server replicas", "status": "failure"}), 400
+   
+
 
 if __name__ == "__main__":
     # Initial servers
