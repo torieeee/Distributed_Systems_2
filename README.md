@@ -11,6 +11,7 @@ A production-ready, Flask-based load balancer leveraging **consistent hashing** 
 
 ---
 
+<<<<<<< Updated upstream
 ## 📝 Purpose & Background
 
 In distributed systems, evenly distributing client requests across backend servers—and quickly recovering from node failures—is crucial for performance and availability. This project demonstrates how to build a **high-availability**, **scalable** load-balancing solution that:
@@ -21,6 +22,39 @@ In distributed systems, evenly distributing client requests across backend serve
 * Runs entirely in **Docker** containers for easy deployment & orchestration.
 
 ---
+=======
+### Task 1: Server Implementation
+- Created a simple Flask server with the following endpoints:
+  - `/home`: Returns the server ID in JSON format.
+  - `/heartbeat`: Returns 200 OK for health checks.
+- Dockerized the server using a custom `Dockerfile`.
+
+### Task 2: Consistent Hashing
+- Implemented a consistent hashing ring with:
+  - **512 total slots**
+  - **9 virtual nodes per physical server**
+- Hash functions used:
+  - `H(i) = i + 2i + 17`
+  - `Φ(i, j) = i + j + 2j + 25`
+- Used **linear probing** to resolve slot conflicts in the hash ring.
+
+### Task 3: Load Balancer
+- Built a Flask-based load balancer with the following features:
+  - Routes incoming requests to backend replicas using consistent hashing.
+  - Monitors server health using heartbeat checks.
+  - Supports dynamic addition and removal of replicas.
+- Implemented the following endpoints:
+  - `GET /rep` – Returns the list of current replica servers.
+  - `POST /add` – Adds a new replica server.
+  - `POST /rm` – Removes a replica server (specified or random).
+  - `GET /<path>` – Forwards requests to the appropriate server.
+
+### Task 4: Performance Analysis
+- **A-1:** Launched **10,000 asynchronous requests** to the load balancer with **N = 3** replicas. Logged server hits and plotted a bar chart to analyze distribution.
+- **A-2:** Varied `N` from **2 to 6** and measured the average load per server.
+- **A-3:** Removed a server during runtime and verified that the load balancer rerouted requests without crashing.
+- **A-4:** Modified the hash functions and observed the impact on distribution and system behavior.
+>>>>>>> Stashed changes
 
 ## ✨ Features
 
