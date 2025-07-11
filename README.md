@@ -222,22 +222,4 @@ All benchmarking scripts live under the `tests/` directory:
 
 ---
 
-## 🤝 Contributing
 
-1. Fork the repo
-2. Create a branch:
-
-   ```bash
-   git checkout -b feature/your-feature
-   ```
-3. Commit your changes:
-
-   ```bash
-   git commit -m "Add awesome feature"
-   ```
-4. Push to your branch:
-
-   ```bash
-   git push origin feature/your-feature
-   ```
-5. Open a Pull Request
