@@ -241,5 +241,3 @@ All benchmarking scripts live under the `tests/` directory:
    git push origin feature/your-feature
    ```
 5. Open a Pull Request
-
-Please ensure tests and linting pass and update docs as needed.
